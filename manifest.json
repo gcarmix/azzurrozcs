@@ -1,0 +1,10 @@
+{
+    "domain": "azzurrozcs",
+    "name": "AzzurroZCS integration by gcarmix",
+    "documentation": "",
+    "issue_tracker": "",
+    "after_dependencies": ["rest"],
+    "codeowners": ["@gcarmix"],
+    "iot_class": "local_polling",
+    "version": "1.0.0"
+}
