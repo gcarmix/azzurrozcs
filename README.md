@@ -11,7 +11,7 @@ In order to install it on home assistant just copy the files from this repositor
 <home assistant config folder>/custom_components/azzurrozcs
 
 then add these lines in the configuration.yaml file:
-
+```
 sensor:
   - platform: azzurrozcs
     name: solarinverter
@@ -46,3 +46,4 @@ template:
         state_class: measurement
         device_class: energy
         icon: mdi:power-socket-it
+```
