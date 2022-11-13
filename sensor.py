@@ -83,6 +83,7 @@ class ZCSSensor(SensorEntity):
     def __init__(self, rest, name):
         """Initialize a ZCSAzzurro sensor."""
         self.rest = rest
+        self.req_retries = 0
         self._attr_name = name
         self._attributes = None
         self.zcs_sensor = {}
@@ -127,6 +128,7 @@ class ZCSSensor(SensorEntity):
         try:
             rest_data = self.rest.data
             if rest_data is not None:
+                self.req_retries = 0
                 self._state = True
                 for line in rest_data.splitlines():
                     if("var webdata_now_p" in line):
@@ -140,6 +142,12 @@ class ZCSSensor(SensorEntity):
                         _LOGGER.info(self.zcs_sensor["energy_total"])
             else:
                 _LOGGER.warning("Empty reply")
+                if(self.req_retries < 5):
+                    self.req_retries += 1
+                else:
+                    self.zcs_sensor["power_now"] = 0.0
+                    self._state = False
+
         except TypeError:
             _LOGGER.warning("REST result not valid")
             _LOGGER.info("Erroneous data: %s", rest_data)
