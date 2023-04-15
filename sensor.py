@@ -1,6 +1,6 @@
 from __future__ import annotations
 import re
-
+from inspect import signature
 from datetime import timedelta
 import logging
 
@@ -63,8 +63,13 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 
     _LOGGER.info("method: %s", method)
 
+    sig = signature(RestData)
+    if len(sig.parameters) > 9:
+        #for compatibility with Home Assistant 2023
+        rest = RestData(hass, method, zcs_address,'utf-8', auth, headers, None, None, verify_ssl, timeout)
+    else:
+        rest = RestData(hass, method, zcs_address, auth, headers, None, None, verify_ssl, timeout)
     
-    rest = RestData(hass, method, zcs_address, auth, headers, None, None, verify_ssl, timeout)
     await rest.async_update()
 
     if rest.data is None:
