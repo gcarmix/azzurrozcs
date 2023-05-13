@@ -5,7 +5,6 @@ from datetime import timedelta
 import logging
 
 import voluptuous as vol
-
 from homeassistant.components.rest.data import RestData
 from requests.auth import HTTPBasicAuth
 from homeassistant.components.sensor import (
@@ -64,7 +63,10 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     _LOGGER.info("method: %s", method)
 
     sig = signature(RestData)
-    if len(sig.parameters) > 9:
+    if len(sig.parameters) == 11:
+        #for compatibility with Home Assistant 2023.5
+        rest = RestData(hass, method, zcs_address,'utf-8', auth, headers, None, None, verify_ssl, "python_default", timeout)
+    elif len(sig.parameters) == 10:    
         #for compatibility with Home Assistant 2023
         rest = RestData(hass, method, zcs_address,'utf-8', auth, headers, None, None, verify_ssl, timeout)
     else:
