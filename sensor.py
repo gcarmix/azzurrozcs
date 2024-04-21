@@ -7,18 +7,18 @@ import logging
 import voluptuous as vol
 from homeassistant.components.rest.data import RestData
 from requests.auth import HTTPBasicAuth
+from homeassistant.components.sensor import SensorDeviceClass
+from homeassistant.components.sensor import SensorStateClass
 from homeassistant.components.sensor import (
-    DEVICE_CLASS_ENERGY,
     PLATFORM_SCHEMA,
-    STATE_CLASS_MEASUREMENT,
     SensorEntity,
 )
+from homeassistant.const import UnitOfEnergy
 from homeassistant.const import (
     ATTR_DATE,
     ATTR_TEMPERATURE,
     ATTR_TIME,
     CONF_NAME,
-    ENERGY_WATT_HOUR,
 )
 from homeassistant.core import callback
 import homeassistant.helpers.config_validation as cv
@@ -83,9 +83,9 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 class ZCSSensor(SensorEntity):
     """Representation of a ZCSAzzurro sensor."""
 
-    _attr_state_class = STATE_CLASS_MEASUREMENT
-    _attr_device_class = DEVICE_CLASS_ENERGY
-    _attr_native_unit_of_measurement = ENERGY_WATT_HOUR
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_device_class =  SensorDeviceClass.ENERGY
+    _attr_native_unit_of_measurement = UnitOfEnergy.ENERGY_WATT_HOUR
 
     def __init__(self, rest, name):
         """Initialize a ZCSAzzurro sensor."""
