@@ -85,7 +85,7 @@ class ZCSSensor(SensorEntity):
 
     _attr_state_class = SensorStateClass.MEASUREMENT
     _attr_device_class =  SensorDeviceClass.ENERGY
-    _attr_native_unit_of_measurement = UnitOfEnergy.ENERGY_WATT_HOUR
+    _attr_native_unit_of_measurement = UnitOfEnergy.WATT_HOUR
 
     def __init__(self, rest, name):
         """Initialize a ZCSAzzurro sensor."""

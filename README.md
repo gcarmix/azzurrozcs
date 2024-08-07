@@ -24,26 +24,20 @@ template:
   - sensor:
       - name: "Power Now"
         unit_of_measurement: "W"
-        state: >
-          {% set power = state_attr('sensor.solarinverter','power_now') | float(0) %}
-          {{ power }}
+        state: "{{ state_attr('sensor.solarinverter', 'power_now') | float(0) }}"
         state_class: measurement
         device_class: power
-        icon: mdi:solar-power
+        icon: "mdi:solar-power"
       - name: "Energy today"
         unit_of_measurement: "kWh"
-        state: >
-          {% set energy = state_attr('sensor.solarinverter','energy_today') | float(0) %}
-          {{ energy | round(2) }}
-        state_class: measurement
+        state: "{{ state_attr('sensor.solarinverter', 'energy_today') | float(0) | round(2) }}"
+        state_class: total
         device_class: energy
-        icon: mdi:power-socket-it
+        icon: "mdi:power-socket-it"
       - name: "Energy total"
         unit_of_measurement: "kWh"
-        state: >
-          {% set energy = state_attr('sensor.solarinverter','energy_total') | float(0) %}
-          {{ energy | round(2) }}
-        state_class: measurement
+        state: "{{ state_attr('sensor.solarinverter', 'energy_total') | float(0) | round(2) }}"
+        state_class: total_increasing
         device_class: energy
-        icon: mdi:power-socket-it
+        icon: "mdi:power-socket-it"
 ```
